@@ -3,6 +3,7 @@ var util = require('./util.js');
 var mySQL = require('mysql');
 
 http.createServer(function(request,response){
+    var page = '../index.html';
     response.writeHead(200, {'Content-type': 'text/plain'});
     response.end('Hello World!' + util.dateTime());
     console.log('Teste');
@@ -10,16 +11,17 @@ http.createServer(function(request,response){
 ).listen(3600);
 
 var conMySQL = mySQL.createConnection({
-    host: 'esparta',
+    host: 'localhost',
     port: 3306,
-    user: 'patriciadados',
-    password: 'dados',
-    database: 'patricia'
+    user: 'root',
+    password: 'rockstar1',
+    database: 'sys'
 });
 
 var retornaDados = function(error,results){
-    return result.stringfy(result);
+   // return results.stringify(results);
+   console.log(results);
 };
 
-var query = 'SELECT * FROM pessoa';
+var query = 'SELECT nome FROM pessoa';
 conMySQL.query(query, retornaDados);
