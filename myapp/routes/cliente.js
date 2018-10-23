@@ -6,12 +6,21 @@ router.get('/lista', function (req, res, next) {
     req.getConnection(function (err, connection) {
         var query = connection.query("SELECT * FROM cliente", function (err, rows) {
             if (err)
-                res.json({ status: 'ERROR', data: + err });
+                res.json({
+                    status: 'ERROR',
+                    data: +err
+                });
             else
-                res.json({ status: 'OK', data: rows });
+                res.json({
+                    status: 'OK',
+                    data: rows
+                });
         });
         if (err)
-            res.json({ status: 'ERROR', data: + err });
+            res.json({
+                status: 'ERROR',
+                data: +err
+            });
     });
 });
 
@@ -20,12 +29,39 @@ router.post('/deleta', function (req, res, next) {
     req.getConnection(function (err, connection) {
         var query = connection.query("DELETE FROM cliente WHERE id = " + id, function (err, rows) {
             if (err)
-                res.json({ status: 'ERROR', data: + err });
+                res.json({
+                    status: 'ERROR',
+                    data: +err
+                });
             else
-                res.json({ status: 'OK', data: 'Excluido com sucesso' });
+                res.json({
+                    status: 'OK',
+                    data: 'Excluido com sucesso'
+                });
         });
         if (err)
-            res.json({ status: 'ERROR', data: + err });
+            res.json({
+                status: 'ERROR',
+                data: +err
+            });
+    });
+});
+
+router.post('/insere', function (req, res, next) {
+    var input = req.body;
+    req.getConnection(function (err, connection) {
+        var query = connection.query("INSERT INTO cliente SET ? ", input, function (err, rows) {
+            if (err)
+                res.json({
+                    status: 'ERROR',
+                    data: +err
+                });
+            else
+                res.json({
+                    status: 'OK',
+                    data: 'Incluído com sucesso!'
+                });
+        });
     });
 });
 

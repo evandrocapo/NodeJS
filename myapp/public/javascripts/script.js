@@ -15,22 +15,47 @@ function exibeClientes(clientes) {
 
 function deletaCliente(id) {
     $(document).ready(function () {
-            $.ajax({
-                url: '/cliente/deleta?id=' + id,
-                dataType: 'json',
-                type: 'post',
-                error: function (dados) {
+        $.ajax({
+            url: '/cliente/deleta?id=' + id,
+            dataType: 'json',
+            type: 'post',
+            error: function (dados) {
+                alert('Erro: ' + dados.data);
+            },
+            success: function (dados) {
+                if (dados.status === 'ERRO')
                     alert('Erro: ' + dados.data);
-                },
-                success: function (dados) {
-                    if (dados.status === 'ERRO')
-                        alert('Erro: ' + dados.data);
-                    else{
-                       alert(dados.data);
-                       var divResult = document.getElementById('result');
-                       divResult.removeChild(document.getElementById(id));
-                    }
+                else {
+                    alert(dados.data);
+                    var divResult = document.getElementById('result');
+                    divResult.removeChild(document.getElementById(id));
                 }
-            });
+            }
         });
+    });
+}
+
+function salvaCliente() {
+    var form = document.formCliente;
+    var input = {
+        nome: form.nome.value,
+        endereco: form.endereco.value,
+        email: form.email.value,
+        telefone: form.telefone.value
+    };
+
+    $.ajax({
+        url: '/cliente/insere',
+        type: 'post',
+        data: input,
+        error: function (dados) {
+            alert('Erro: ' + dados.data);
+        },
+        success: function (dados) {
+            if (dados.status === 'ERRO')
+                alert('Erro: ' + dados.data);
+            else
+                alert(dados.data);
+        }
+    });
 }
